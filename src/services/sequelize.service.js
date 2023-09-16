@@ -1,9 +1,16 @@
 import { Sequelize } from "sequelize";
-import databaseConfig from "../config/database";
 import fs from "fs";
+import path from 'path';
+
+// Get the directory of the current module (express.service.js)
+const currentModuleDir = path.dirname(new URL(import.meta.url).pathname);
+
+// Navigate to the parent directory and then to the routes directory
+const parentDir = path.join(currentModuleDir, '../');
+const routesDir = path.join(parentDir, 'models/');
 
 const modelFiles = fs
-  .readdirSync(__dirname + "/../models/")
+  .readdirSync(routesDir)
   .filter((file) => file.endsWith(".js"));
 
 const sequelizeService = {

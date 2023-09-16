@@ -1,8 +1,8 @@
 import * as Yup from "yup";
-import { Errors } from "../utils/errors";
-import  DataCache  from "../utils/data_cache";
-import DataCollector from "../utils/data_collector";
-import  GraphCreator  from "../utils/graph_creator";
+import { Errors } from "../utils/errors.js";
+import  DataCache  from "../utils/data_cache.js";
+import DataCollector from "../utils/data_collector.js";
+import  GraphCreator  from "../utils/graph_creator.js";
 
 
 let indexController = {

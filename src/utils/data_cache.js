@@ -1,8 +1,8 @@
 import * as Yup from "yup";
-import Logging from "../models/Logging";
-import Results from "../models/Results";
-import Opening_Average from "../models/Opening_Average";
-import { Errors } from "../utils/errors";
+import Logging from "../models/Logging.js";
+import Results from "../models/Results.js";
+import Opening_Average from "../models/Opening_Average.js";
+import { Errors } from "../utils/errors.js";
 import moment from "moment";
 import * as dfd from "danfojs-node"
 

@@ -2,6 +2,7 @@ import express from "express";
 import fs from "fs";
 import bodyParser from "body-parser";
 import helmet from "helmet";
+import path from 'path';
 
 
 /*
@@ -9,8 +10,15 @@ import helmet from "helmet";
   available under the req.body property.
 */
 
+// Get the directory of the current module (express.service.js)
+const currentModuleDir = path.dirname(new URL(import.meta.url).pathname);
+
+// Navigate to the parent directory and then to the routes directory
+const parentDir = path.join(currentModuleDir, '../');
+const routesDir = path.join(parentDir, 'routes/');
+
 const routeFiles = fs
-  .readdirSync(__dirname + "/../routes/")
+  .readdirSync(routesDir)
   .filter(
     (file) => file.endsWith(".js")
   );
