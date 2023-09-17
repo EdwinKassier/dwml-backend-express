@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import fs from "fs";
 import bodyParser from "body-parser";
 import helmet from "helmet";
@@ -41,6 +42,7 @@ const expressService = {
       server = express();
       server.use(bodyParser.json());
       server.use(helmet());
+      server.use(cors());
 
       server.use(routes);
 
