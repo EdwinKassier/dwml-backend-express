@@ -124,7 +124,7 @@ class DataCache {
 
         try{
             const item = await Opening_Average.create(opening_average_item);
-            console.log(log.toJSON()+' was saved to opening_average')
+            console.log(item.toJSON()+' was saved to opening_average')
         }
         catch(err){
             console.log(err)

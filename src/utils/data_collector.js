@@ -133,7 +133,7 @@ class DataCollector {
 
       return true;
     } catch (err) {
-      console.log(exc);
+      console.log(err);
     }
 
     return False;
@@ -237,7 +237,17 @@ class DataCollector {
 
       //console.log(final_result);
 
-      return final_result;
+      if (final_result.GROWTHFACTOR !== "NaN"){
+
+        return final_result;
+      }
+      else{
+
+        return "Symbol doesn't exist"
+
+      }
+
+
     } catch (err) {
       console.log(err);
     }
