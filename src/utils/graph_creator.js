@@ -134,7 +134,7 @@ class GraphCreator {
 
         //Remove two columns name is 'C' and 'D'
         let interim_df = data_frame.dropSeries(['OpenPrice', 'HighPrice',
-        'LowPrice', 'Volume', 'NA']);
+        'LowPrice', 'Volume', 'VWap', 'Count']);
 
         //Rename columns for frontend
         let final_df = interim_df.renameSeries({
