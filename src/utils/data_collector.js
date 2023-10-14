@@ -21,11 +21,19 @@ class DataCollector {
       //Convert raw response to a json representation
       const data =await raw.json();
 
-      //console.log(data)
+      console.log(data)
+
+      const keysWithUSD = Object.keys(data.result).filter(key => key.includes('USD'));
+
+      console.log(`target key is ${keysWithUSD}`)
+
+      let target_data =data["result"][keysWithUSD]
+
+      console.log(`target data is ${target_data}`)
 
       //Create a danfo dataframe from the json result
 
-      const df = new dataForge.DataFrame(data["result"]["604800"])
+      const df = new dataForge.DataFrame(target_data)
       /*
       const df = new dfd.DataFrame(data["result"]["604800"], {
         columns: [
@@ -46,13 +54,17 @@ class DataCollector {
         "2": "HighPrice",
         "3": "LowPrice",
         "4": "ClosePrice",
-        "5": "Volume",
-        "6": "NA"
+        "5": "VWap",
+        "6": "Volume",
+        "7": "Count"
         });
 
+        
         let new_date_df = renamed_df.generateSeries({
-            CloseTime: row => new Date(parseInt(row.CloseTime)).toISOString()
+            CloseTime: row => new Date(parseInt(row.CloseTime)).toISOString(),
+            ClosePrice: row => parseFloat(row.ClosePrice)
         });
+        
 
       const columnNames = new_date_df.getColumnNames();
       console.log(columnNames);
@@ -119,8 +131,7 @@ class DataCollector {
 
     try {
       const response = await fetch(
-        `https://api.cryptowat.ch/markets/kraken/${this.coin_symbol}usd/price`,
-        { timeout: 10000 }
+        `https://api.kraken.com/0/public/OHLC?pair=${this.coin_symbol}USD&interval=21600&since=1548111600`
       );
       const check_symbol = await response.json();
 
@@ -136,7 +147,7 @@ class DataCollector {
       console.log(err);
     }
 
-    return False;
+    return false;
   }
 
   async driver_logic() {
@@ -157,8 +168,6 @@ class DataCollector {
 
       console.log("We should query the api");
 
-      //Converting coin symbol to the lowercase version of itself
-      let coin_symbol = this.coin_symbol.toLowerCase();
 
       //Creating timestamps for the time period before the coin was listed and the last month
       const from_date = Math.floor(
@@ -183,9 +192,7 @@ class DataCollector {
         console.log("We haven't seen this symbol before");
 
         const response = await fetch(
-          `https://api.cryptowat.ch/markets/kraken/${coin_symbol}usd/ohlc?` +
-            new URLSearchParams({ after: from_date, periods: "604800" }),
-          { timeout: 10000 }
+          `https://api.kraken.com/0/public/OHLC?pair=${this.coin_symbol}USD&interval=21600&since=1548111600`
         );
 
         // create pandas dataframe for the price data at the coins inception
@@ -200,7 +207,7 @@ class DataCollector {
         //console.log(df_start);
 
         let opening_average_result = {
-          SYMBOL: coin_symbol,
+          SYMBOL: this.coin_symbol,
           AVERAGE: average_start_price,
         };
 
@@ -208,10 +215,8 @@ class DataCollector {
       }
 
       //generating request urls to REST api
-      let data_raw_current = await fetch(
-        `https://api.cryptowat.ch/markets/kraken/${coin_symbol}usd/ohlc?` +
-          new URLSearchParams({ after: from_date, periods: "604800" }),
-        { timeout: 10000 }
+      const data_raw_current = await fetch(
+        `https://api.kraken.com/0/public/OHLC?pair=${this.coin_symbol}USD&interval=21600&since=1548111600`
       );
 
       //create pandas dataframe for the price data at the moment

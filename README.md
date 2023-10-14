@@ -30,10 +30,7 @@ Runs on localhost:3000 by default but can be configured using the `PORT` environ
 ### Running tests
 
 ```
-npm test
-
-# Watch repo
-npm run test:watch
+npx playwright test
 ```
 
 ### Linting

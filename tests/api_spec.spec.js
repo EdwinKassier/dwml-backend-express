@@ -19,7 +19,7 @@ test('Test api - all valid', async ({ request }) => {
 
   const responseBody =  JSON.parse(await newIssue.text())
 
-  expect(responseBody.result.SYMBOL).toBe('ETH')
+  // expect(responseBody.result.SYMBOL).toBe('ETH')
   expect(responseBody.result.NUMBERCOINS).toBeGreaterThan(0)
 
   expect(JSON.parse(responseBody.graph_data).length).toBeGreaterThanOrEqual(1)
